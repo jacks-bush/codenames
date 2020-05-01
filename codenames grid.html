@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="buttonContainer">
+        <button type="button" class="btn btn-primary" onclick="generateCodenamesGrid()">Generate New Grid</button><br /><br />
+    </div>
+    <div id="curColorContainer"></div><br/> <br />
+    <table id="codenamesContainer">
+        <tr>
+            <td id="0"></td>
+            <td id="1"></td>
+            <td id="2"></td>
+            <td id="3"></td>
+            <td id="4"></td>
+        </tr>
+        <tr>
+            <td id="5"></td>
+            <td id="6"></td>
+            <td id="7"></td>
+            <td id="8"></td>
+            <td id="9"></td>
+        </tr>
+        <tr>
+            <td id="10"></td>
+            <td id="11"></td>
+            <td id="12"></td>
+            <td id="13"></td>
+            <td id="14"></td>
+        </tr>
+        <tr>
+            <td id="15"></td>
+            <td id="16"></td>
+            <td id="17"></td>
+            <td id="18"></td>
+            <td id="19"></td>
+        </tr>
+        <tr>
+            <td id="20"></td>
+            <td id="21"></td>
+            <td id="22"></td>
+            <td id="23"></td>
+            <td id="24"></td>
+        </tr>
+    </table>
+    <style>
+        #codenamesContainer {
+            display: flex;
+            justify-content: center;
+        }
+
+        table {
+            font-size: 48px;
+            text-align: center;
+        }
+
+        td {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+
+        #buttonContainer {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #curColorContainer {
+            width: 100px;
+            height: 30px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript">
+        const RED = '#d11c2f';
+        const BLUE = '#10719e';
+        const TAN = '#d0c397';
+        const BLACK = '#565656';
+        let redTeamFirst = false;
+
+        window.addEventListener('load', generateCodenamesGrid);
+
+        function generateCodenamesGrid() {
+            // determine which team goes first
+            redTeamFirst = getRandomNumber(2) == 0;
+            document.getElementById('curColorContainer').style.backgroundColor = redTeamFirst ? RED : BLUE;
+
+            // get random colors
+            const randomColors = getRandomColors();
+
+            // fill table with words
+            for (let i = 0; i < randomColors.length; i++) {
+                document.getElementById(i.toString()).style.backgroundColor = randomColors[i]
+            }
+        }
+
+        function getDefaultColorList() {
+            colorList = [];
+
+            // add 8 of both red and blue
+            for (let i = 0; i < 8; i++) {
+                colorList.push(RED);
+                colorList.push(BLUE);
+            }
+
+            // add one more for whichever team goes first
+            colorList.push(redTeamFirst ? RED : BLUE);
+
+            // add 7 innocent bystanders
+            for (let i = 0; i < 7; i++) {
+                colorList.push(TAN);
+            }
+
+            // add one assassin
+            colorList.push(BLACK);
+            
+            return colorList;
+        }
+
+        function getRandomColors() {
+            // get default colors
+            const defaultColors = getDefaultColorList();
+
+            const randomColors = [];
+            for (let i = 0; i < 25; i++) {
+                randomColors.push(defaultColors.splice(getRandomNumber(defaultColors.length), 1)[0]);
+            }
+            return randomColors;
+        }
+
+        function getRandomNumber(upperLimit) {
+            return Math.floor(Math.random() * upperLimit);
+        }
+    </script>
+</body>
+
+</html>

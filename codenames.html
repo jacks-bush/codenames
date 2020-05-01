@@ -1,0 +1,157 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="buttonContainer">
+        <button type="button" class="btn btn-primary" onclick="generateCodenamesBoard()">Generate New
+            Board</button><br /><br />
+    </div>
+    <table id="codenamesContainer">
+        <tr class="unselectable">
+            <td id="0"></td>
+            <td id="1"></td>
+            <td id="2"></td>
+            <td id="3"></td>
+            <td id="4"></td>
+        </tr>
+        <tr class="unselectable">
+            <td id="5"></td>
+            <td id="6"></td>
+            <td id="7"></td>
+            <td id="8"></td>
+            <td id="9"></td>
+        </tr>
+        <tr class="unselectable">
+            <td id="10"></td>
+            <td id="11"></td>
+            <td id="12"></td>
+            <td id="13"></td>
+            <td id="14"></td>
+        </tr>
+        <tr class="unselectable">
+            <td id="15"></td>
+            <td id="16"></td>
+            <td id="17"></td>
+            <td id="18"></td>
+            <td id="19"></td>
+        </tr>
+        <tr class="unselectable">
+            <td id="20"></td>
+            <td id="21"></td>
+            <td id="22"></td>
+            <td id="23"></td>
+            <td id="24"></td>
+        </tr>
+    </table>
+    <style>
+        #codenamesContainer {
+            display: flex;
+            justify-content: center;
+        }
+
+        table {
+            font-size: 48px;
+            text-align: center;
+        }
+
+        td {
+            border: 1px solid black;
+            width: 300px;
+            height: 150px;
+        }
+
+        #buttonContainer {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <script type="text/javascript">
+        const MASTER_WORD_LIST = ['Hollywood', 'Screen', 'Play', 'Marble', 'Dinosaur', 'Cat', 'Pitch', 'Bond', 'Greece', 'Deck', 'Spike', 'Center', 'Vacuum', 'Unicorn', 'Undertaker', 'Sock', 'Loch Ness', 'Horse', 'Berlin', 'Platypus', 'Port', 'Chest', 'Box', 'Compound', 'Ship', 'Watch', 'Space', 'Flute', 'Tower', 'Death', 'Well', 'Fair', 'Tooth', 'Staff', 'Bill', 'Shot', 'King', 'Pan', 'Square', 'Buffalo', 'Scientist', 'Chick', 'Atlantis', 'Spy', 'Mail', 'Nut', 'Log', 'Pirate', 'Face', 'Stick', 'Disease', 'Yard', 'Mount', 'Slug', 'Dice', 'Lead', 'Hook', 'Carrot', 'Poison', 'Stock', 'Foot', 'Torch', 'Arm', 'Figure', 'Mine', 'Suit', 'Crane', 'Beijing', 'Mass', 'Microscope', 'Engine', 'China', 'Straw', 'Pants', 'Europe', 'Boot', 'Princess', 'Link', 'Luck', 'Olive', 'Palm', 'Teacher', 'Thumb', 'Octopus', 'Hood', 'Tie', 'Doctor', 'Wake', 'Cricket', 'Millionaire', 'New York', 'State', 'Bermuda', 'Park', 'Turkey', 'Chocolate', 'Trip', 'Racket', 'Bat', 'Jet', 'Shakespeare', 'Bolt', 'Switch', 'Wall', 'Soul', 'Ghost', 'Time', 'Dance', 'Amazon', 'Grace', 'Moscow', 'Pumpkin', 'Antarctica', 'Whip', 'Heart', 'Table', 'Ball', 'Fighter', 'Cold', 'Day', 'Spring', 'Match', 'Diamond', 'Centaur', 'March', 'Roulette', 'Dog', 'Cross', 'Wave', 'Duck', 'Wind', 'Spot', 'Skyscraper', 'Paper', 'Apple', 'Oil', 'Cook', 'Fly', 'Cast', 'Bear', 'Pin', 'Thief', 'Trunk', 'America', 'Novel', 'Cell', 'Bow', 'Model', 'Knife', 'Knight', 'Court', 'Iron', 'Whale', 'Shadow', 'Contract', 'Mercury', 'Conductor', 'Seal', 'Car', 'Ring', 'Kid', 'Piano', 'Laser', 'Sound', 'Pole', 'Superhero', 'Revolution', 'Pit', 'Gas', 'Glass', 'Washington', 'Bark', 'Snow', 'Ivory', 'Pipe', 'Cover', 'Degree', 'Tokyo', 'Church', 'Pie', 'Tube', 'Block', 'Comic', 'Fish', 'Bridge', 'Moon', 'Part', 'Aztec', 'Smuggler', 'Train', 'Embassy', 'Pupil', 'Scuba Diver', 'Ice', 'Tap', 'Code', 'Shoe', 'Server', 'Club', 'Row', 'Pyramid', 'Bug', 'Penguin', 'Pound', 'Himalayas', 'Czech', 'Rome', 'Eye', 'Board', 'Bed', 'Point', 'France', 'Mammoth', 'Cotton', 'Robin', 'Net', 'Bugle', 'Maple', 'England', 'Field', 'Robot', 'Plot', 'Africa', 'Tag', 'Mouth', 'Kiwi', 'Mole', 'School', 'Sink', 'Pistol', 'Opera', 'Mint', 'Root', 'Sub', 'Crown', 'Back', 'Plane', 'Mexico', 'Cloak', 'Circle', 'Tablet', 'Australia', 'Green', 'Egypt', 'Line', 'Lawyer', 'Witch', 'Parachute', 'Crash', 'Gold', 'Note', 'Lion', 'Plastic', 'Web', 'Ambulance', 'Hospital', 'Spell', 'Lock', 'Water', 'London', 'Casino', 'Cycle', 'Bar', 'Cliff', 'Round', 'Bomb', 'Giant', 'Hand', 'Ninja', 'Rose', 'Slip', 'Limousine', 'Pass', 'Theater', 'Plate', 'Satellite', 'Ketchup', 'Hotel', 'Tail', 'Tick', 'Ground', 'Police', 'Dwarf', 'Fan', 'Dress', 'Saturn', 'Grass', 'Brush', 'Chair', 'Rock', 'Pilot', 'Telescope', 'File', 'Lab', 'India', 'Ruler', 'Nail', 'Swing', 'Olympus', 'Change', 'Date', 'Stream', 'Missile', 'Scale', 'Band', 'Angel', 'Press', 'Berry', 'Card', 'Check', 'Draft', 'Head', 'Lap', 'Orange', 'Ice Cream', 'Film', 'Washer', 'Pool', 'Shark', 'Van', 'String', 'Calf', 'Hawk', 'Eagle', 'Needle', 'Forest', 'Dragon', 'Key', 'Belt', 'Cap', 'Drill', 'Glove', 'Paste', 'Fall', 'Fire', 'Spider', 'Spine', 'Soldier', 'Horn', 'Queen', 'Ham', 'Litter', 'Life', 'Temple', 'Rabbit', 'Button', 'Game', 'Star', 'Jupiter', 'Vet', 'Night', 'Air', 'Battery', 'Genius', 'Shop', 'Bottle', 'Stadium', 'Alien', 'Light', 'Triangle', 'Lemon', 'Nurse', 'Drop', 'Track', 'Bank', 'Germany', 'Worm', 'Ray', 'Capital', 'Strike', 'War', 'Concert', 'Honey', 'Canada', 'Buck', 'Snowman', 'Beat', 'Jam', 'Copper', 'Beach', 'Bell', 'Leprechaun', 'Pheonix', 'Force', 'Boom', 'Fork', 'Alps', 'Post', 'Fence', 'Kangaroo', 'Mouse', 'Mug', 'Horseshoe', 'Scorpion', 'Agent', 'Helicopter', 'Hole', 'Organ', 'Jack', 'Charge'];
+        const COLORS = ['', '#d11c2f', '#10719e', '#d0c397'];
+        let availableWords = MASTER_WORD_LIST.slice();
+        let cardColorLookup = [];
+        clearBoardColors();
+
+        window.addEventListener('load', generateCodenamesBoard);
+
+        // set up click event listener
+        const tdElements = document.getElementsByTagName('td');
+        for (let i = 0; i < tdElements.length; i++) {
+            const element = tdElements[i];
+            element.addEventListener("click", toggleCardColor);
+        }
+
+        function toggleCardColor(e) {
+            // cycle to next color for card
+            let cardIdx = parseInt(e.target.id);
+            cardColorLookup[cardIdx] = (cardColorLookup[cardIdx] + 1) % COLORS.length;
+
+            // set new color for element
+            e.target.style.color = e.target.style.backgroundColor = COLORS[cardColorLookup[cardIdx]];
+        }
+
+        function generateCodenamesBoard() {
+            clearBoardColors();
+            // get 25 random words
+            const randomWords = getRandomWords();
+
+            // fill table with words
+            for (let i = 0; i < randomWords.length; i++) {
+                document.getElementById(i.toString()).innerText = randomWords[i];
+            }
+        }
+
+        function clearBoardColors() {
+            cardColorLookup = [];
+            for (let i = 0; i < 25; i++) {
+                cardColorLookup.push(0);
+            }
+
+            const tdElements = document.getElementsByTagName('td');
+            for (let i = 0; i < tdElements.length; i++) {
+                const element = tdElements[i];
+                element.style.color = element.style.backgroundColor = '';
+            }
+        }
+
+        function getRandomWords() {
+            const randomWords = [];
+            for (let i = 0; i < 25; i++) {
+                randomWords.push(availableWords.splice(getRandomNumber(availableWords.length), 1)[0]);
+                if (availableWords.length == 0) {
+                    availableWords = MASTER_WORD_LIST.slice().filter(x => !randomWords.includes(x));
+                }
+            }
+            return randomWords;
+        }
+
+        function getRandomNumber(upperLimit) {
+            return Math.floor(Math.random() * upperLimit);
+        }
+    </script>
+</body>
+
+</html>
